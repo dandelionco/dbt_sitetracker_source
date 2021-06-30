@@ -1,15 +1,19 @@
-Welcome to your new dbt project!
+# SiteTracker (Source)
 
-### Using the starter project
+This package models SiteTracker data by doing the following:
 
-Try running the following commands:
-- dbt run
-- dbt test
+* Adds descriptions to tables and columns that are synced using Fivetran.
+* Adds column-level testing where applicable. For example, all primary keys are tested for uniqueness and non-null values.
 
+## Models
 
-### Resources:
-- Learn more about dbt [in the docs](https://docs.getdbt.com/docs/introduction)
-- Check out [Discourse](https://discourse.getdbt.com/) for commonly asked questions and answers
-- Join the [chat](http://slack.getdbt.com/) on Slack for live discussions and support
-- Find [dbt events](https://events.getdbt.com) near you
-- Check out [the blog](https://blog.getdbt.com/) for the latest news on dbt's development and best practices
+This package contains staging models:
+
+* Remove any rows that are soft-deleted.
+* Name columns consistently across all packages:
+* Boolean fields are prefixed with `is_` or `has_`.
+* Timestamps are appended with `_at`.
+* ID primary keys are prefixed with the name of the table. For example, the user table's ID column is renamed `user_id`.
+
+## Configuration
+By default this package will look for your SiteTracker data in the `sitetracker` schema of your [target database](https://docs.getdbt.com/docs/running-a-dbt-project/using-the-command-line-interface/configure-your-profile).

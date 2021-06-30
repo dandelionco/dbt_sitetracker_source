@@ -1,0 +1,42 @@
+version: 2
+
+models:
+    - name: stg_sitetracker__calendar_event_assignment
+      description: Each record represents a SiteTracker calendar event assignment.
+      columns:
+          - name: calendar_event_assignment_id
+            tests:
+                - unique
+                - not_null
+
+    - name: stg_sitetracker__calendar_event
+      description: Each record represents a SiteTracker calendar event.
+      columns:
+          - name: calendar_event_id
+            tests:
+                - unique
+                - not_null
+
+    - name: stg_sitetracker__job
+      description: Each record represents a SiteTracker job.
+      columns:
+          - name: job_id
+            tests:
+                - unique
+                - not_null
+
+    - name: stg_sitetracker__site
+      description: Each record represents a SiteTracker site.
+      columns:
+          - name: site_id
+            tests:
+                - unique
+                - not_null
+
+    - name: stg_sitetracker__timesheet_user
+      description: Each record represents a SiteTracker timesheet user.
+      columns:
+          - name: timesheet_user_id
+            tests:
+                - unique
+                - not_null
