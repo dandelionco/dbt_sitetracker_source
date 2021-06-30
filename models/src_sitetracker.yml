@@ -1,0 +1,16 @@
+version: 2
+
+sources:
+  - name: sitetracker_sandbox
+    loader: Fivetran
+    loaded_at_field: _fivetran_synced
+    tables:
+      - name: sitetracker_calendar_event_assignment_c
+
+      - name: sitetracker_calendar_event_c
+
+      - name: sitetracker_job_c
+
+      - name: sitetracker_site_c
+      
+      - name: sitetracker_timesheet_user_c
