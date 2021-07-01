@@ -10,7 +10,7 @@ with base as (
 ), renamed as (
 
     select
-        id as job_id,
+        id as site_id,
         _fivetran_synced,
         contact_c as contact_id,
         created_date as created_at,
