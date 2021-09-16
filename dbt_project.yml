@@ -10,3 +10,4 @@ vars:
     job: "{{ source('sitetracker','sitetracker_job_c') }}"
     site: "{{ source('sitetracker','sitetracker_site_c') }}"
     timesheet_user: "{{ source('sitetracker','sitetracker_timesheet_user_c') }}"
+    user: "{{ source('sitetracker','user') }}"

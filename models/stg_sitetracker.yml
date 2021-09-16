@@ -40,3 +40,11 @@ models:
             tests:
                 - unique
                 - not_null
+
+    - name: stg_sitetracker__user
+      description: Each record represents a SiteTracker user.
+      columns:
+          - name: user_id
+            tests:
+                - unique
+                - not_null
