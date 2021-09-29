@@ -5,6 +5,8 @@ sources:
     loader: Fivetran
     loaded_at_field: _fivetran_synced
     tables:
+      - name: contact
+
       - name: sitetracker_calendar_event_assignment_c
 
       - name: sitetracker_calendar_event_c

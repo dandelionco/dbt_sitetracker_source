@@ -7,6 +7,7 @@ vars:
   sitetracker_source:
     calendar_event_assignment: "{{ source('sitetracker','sitetracker_calendar_event_assignment_c') }}"
     calendar_event: "{{ source('sitetracker','sitetracker_calendar_event_c') }}"
+    contact: "{{ source('sitetracker','contact') }}"
     job: "{{ source('sitetracker','sitetracker_job_c') }}"
     site: "{{ source('sitetracker','sitetracker_site_c') }}"
     timesheet_user: "{{ source('sitetracker','sitetracker_timesheet_user_c') }}"
