@@ -14,7 +14,7 @@ with base as (
         _fivetran_synced,
         created_date as created_at,
         email,
-        cast(hub_spot_contact_id_c as int64) as deal_id,
+        cast(hub_spot_contact_id_c as int64) as crm_contact_id,
         last_modified_date as last_modified_at,
         name as full_name,
         phone as phone_number
