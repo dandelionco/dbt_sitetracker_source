@@ -1,25 +1,36 @@
 with base as (
 
     select *
-    from {{ var('user') }}
+    from {{ ref('stg_sitetracker__user_tmp') }}
 
-), renamed as (
+), fields as (
 
     select
-        id as user_id,
-        _fivetran_synced,
-        created_date as created_at,
-        email,
-        first_name,
-        is_active,
-        last_modified_date as last_modified_at,
-        last_name,
-        mobile_phone,
-        name as full_name
-        
+        {{
+            fivetran_utils.fill_staging_columns(
+                source_columns=adapter.get_columns_in_relation(ref('stg_sitetracker__user_tmp')),
+                staging_columns=get_user_columns()
+            )
+        }}
+
     from base
+
+), final as (
+
+    select
+        _fivetran_synced,
+        user_id,
+        created_at,
+        last_modified_at,
+        is_active,
+        first_name,
+        last_name,
+        email,
+        full_name
+
+    from fields
 
 )
 
 select *
-from renamed
+from final

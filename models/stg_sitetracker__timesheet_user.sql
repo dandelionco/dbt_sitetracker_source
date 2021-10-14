@@ -1,30 +1,38 @@
 with base as (
 
     select *
-    from {{ var('timesheet_user') }}
-    where not coalesce(
-        is_deleted,
-        false
-    )
+    from {{ ref('stg_sitetracker__timesheet_user_tmp') }}
 
-), renamed as (
+), fields as (
 
     select
-        id as timesheet_user_id,
-        _fivetran_synced,
-        created_date as created_at,
-        crew_resource_type_c as crew_resource_type,
-        last_modified_date as last_modified_at,
-        name as display_name,
-        sitetracker_active_c as is_active,
-        sitetracker_calendar_c as calendar_id,
-        sitetracker_territory_c as territory_id,
-        sitetracker_type_c as timesheet_user_type,
-        sitetracker_user_c as user_id
+        {{
+            fivetran_utils.fill_staging_columns(
+                source_columns=adapter.get_columns_in_relation(ref('stg_sitetracker__timesheet_user_tmp')),
+                staging_columns=get_timesheet_user_columns()
+            )
+        }}
 
     from base
+
+), final as (
+
+    select
+        _fivetran_synced,
+        timesheet_user_id,
+        created_date as created_at,
+        last_modified_date as last_modified_at,
+        crew_resource_type,
+        display_name,
+        is_active,
+        calendar_id,
+        territory_id,
+        timesheet_user_type,
+        user_id
+
+    from fields
 
 )
 
 select *
-from renamed
+from final

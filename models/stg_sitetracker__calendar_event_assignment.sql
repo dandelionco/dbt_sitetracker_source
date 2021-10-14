@@ -1,28 +1,36 @@
 with base as (
 
     select *
-    from {{ var('calendar_event_assignment') }}
-    where not coalesce(
-        is_deleted,
-        false
-    )
+    from {{ ref('stg_sitetracker__calendar_event_assignment_tmp') }}
 
-), renamed as (
+), fields as (
 
     select
-        id as calendar_event_assignment_id,
-        _fivetran_synced,
-        created_date as created_at,
-        last_modified_date as last_modified_at,
-        name as display_name,
-        sitetracker_calendar_event_c as calendar_event_id,
-        sitetracker_mobile_name_c as mobile_display_name,
-        sitetracker_resource_c as resource_id,
-        sitetracker_status_c as status
-        
+        {{
+            fivetran_utils.fill_staging_columns(
+                source_columns=adapter.get_columns_in_relation(ref('stg_sitetracker__calendar_event_assignment_tmp')),
+                staging_columns=get_calendar_event_assignment_columns()
+            )
+        }}
+
     from base
+
+), final as (
+
+    select
+        _fivetran_synced,
+        calendar_event_assignment_id,
+        created_at,
+        last_modified_at,
+        display_name,
+        calendar_event_id,
+        mobile_display_name,
+        resource_id,
+        status
+
+    from fields
 
 )
 
 select *
-from renamed
+from final

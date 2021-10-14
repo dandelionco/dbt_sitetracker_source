@@ -1,27 +1,35 @@
 with base as (
 
     select *
-    from {{ var('site') }}
-    where not coalesce(
-        is_deleted,
-        false
-    )
+    from {{ ref('stg_sitetracker__site_tmp') }}
 
-), renamed as (
+), fields as (
 
     select
-        id as site_id,
-        _fivetran_synced,
-        contact_c as contact_id,
-        created_date as created_at,
-        cast(hub_spot_deal_id_c as int64) as deal_id,
-        last_modified_date as last_modified_at,
-        name as display_name,
-        sitetracker_territory_c as territory_id
-        
+        {{
+            fivetran_utils.fill_staging_columns(
+                source_columns=adapter.get_columns_in_relation(ref('stg_sitetracker__site_tmp')),
+                staging_columns=get_site_columns()
+            )
+        }}
+
     from base
+
+), final as (
+
+    select
+        _fivetran_synced,
+        site_id,
+        created_at,
+        last_modified_at,
+        display_name,
+        cast(deal_id as int64) as deal_id,
+        contact_id,
+        territory_id
+
+    from fields
 
 )
 
 select *
-from renamed
+from final

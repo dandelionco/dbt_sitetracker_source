@@ -1,27 +1,35 @@
 with base as (
 
     select *
-    from {{ var('contact') }}
-    where not coalesce(
-        is_deleted,
-        false
-    )
+    from {{ ref('stg_sitetracker__contact_tmp') }}
 
-), renamed as (
+), fields as (
 
     select
-        id as contact_id,
-        _fivetran_synced,
-        created_date as created_at,
-        email,
-        cast(hub_spot_contact_id_c as int64) as crm_contact_id,
-        last_modified_date as last_modified_at,
-        name as full_name,
-        phone as phone_number
-        
+        {{
+            fivetran_utils.fill_staging_columns(
+                source_columns=adapter.get_columns_in_relation(ref('stg_sitetracker__contact_tmp')),
+                staging_columns=get_contact_columns()
+            )
+        }}
+
     from base
+
+), final as (
+
+    select
+        _fivetran_synced,
+        contact_id,
+        created_at,
+        email,
+        cast(crm_contact_id as int64) as crm_contact_id,
+        last_modified_at,
+        full_name,
+        phone_number
+
+    from fields
 
 )
 
 select *
-from renamed
+from final
