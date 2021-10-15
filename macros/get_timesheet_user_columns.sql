@@ -2,7 +2,7 @@
 
 {% set columns = [
     {"name": "_fivetran_synced", "datatype": dbt_utils.type_timestamp()},
-    {"name": "id", "datatype": dbt_utils.type_string(), "alias": "contact_id"},
+    {"name": "id", "datatype": dbt_utils.type_string(), "alias": "timesheet_user_id"},
     {"name": "created_date", "datatype": dbt_utils.type_timestamp(),"alias":"created_at"},
     {"name": "last_modified_date", "datatype": dbt_utils.type_timestamp(),"alias":"last_modified_at"},
     {"name": "crew_resource_type_c", "datatype": dbt_utils.type_string(),"alias":"crew_resource_type"},
