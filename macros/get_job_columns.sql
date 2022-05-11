@@ -21,6 +21,8 @@
     {"name": "sitetracker_territory_c", "datatype": dbt_utils.type_string(), "alias": "territory_id"}
 ] %}
 
+{{ fivetran_utils.add_pass_through_columns(columns, var('jobs_pass_through_columns')) }}
+
 {{ return(columns) }}
 
 {% endmacro %}

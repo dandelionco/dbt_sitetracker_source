@@ -37,6 +37,9 @@ with base as (
         site_id,
         territory_id
 
+        --The below macro adds the fields defined within your jobs_pass_through_columns variable into the staging model
+        {{ fivetran_utils.fill_pass_through_columns('jobs_pass_through_columns') }}
+
     from fields
 
 )

@@ -6,10 +6,11 @@
     {"name": "created_date", "datatype": dbt_utils.type_timestamp(),"alias":"created_at"},
     {"name": "last_modified_date", "datatype": dbt_utils.type_timestamp(),"alias":"last_modified_at"},
     {"name": "name", "datatype": dbt_utils.type_string(), "alias":"display_name"},
-    {"name": "hub_spot_deal_id_c", "datatype": dbt_utils.type_string(), "alias":"deal_id"},
     {"name": "contact_c", "datatype": dbt_utils.type_string(), "alias":"contact_id"},
     {"name": "sitetracker_territory_c", "datatype": dbt_utils.type_string(), "alias": "territory_id"}
 ] %}
+
+{{ fivetran_utils.add_pass_through_columns(columns, var('sites_pass_through_columns')) }}
 
 {{ return(columns) }}
 

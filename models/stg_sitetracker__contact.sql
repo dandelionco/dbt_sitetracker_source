@@ -22,10 +22,12 @@ with base as (
         contact_id,
         created_at,
         email,
-        cast(crm_contact_id as int64) as crm_contact_id,
         last_modified_at,
         full_name,
         phone_number
+
+        --The below macro adds the fields defined within your contacts_pass_through_columns variable into the staging model
+        {{ fivetran_utils.fill_pass_through_columns('contacts_pass_through_columns') }}
 
     from fields
 

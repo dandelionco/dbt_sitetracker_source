@@ -23,9 +23,11 @@ with base as (
         created_at,
         last_modified_at,
         display_name,
-        cast(deal_id as int64) as deal_id,
         contact_id,
         territory_id
+
+        --The below macro adds the fields defined within your sites_pass_through_columns variable into the staging model
+        {{ fivetran_utils.fill_pass_through_columns('sites_pass_through_columns') }}
 
     from fields
 

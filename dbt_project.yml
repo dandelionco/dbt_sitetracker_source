@@ -12,3 +12,7 @@ vars:
     site: "{{ source('sitetracker','sitetracker_site_c') }}"
     timesheet_user: "{{ source('sitetracker','sitetracker_timesheet_user_c') }}"
     user: "{{ source('sitetracker','user') }}"
+
+  contacts_pass_through_columns: []
+  jobs_pass_through_columns: []
+  sites_pass_through_columns: []
